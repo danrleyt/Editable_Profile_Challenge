@@ -8,7 +8,6 @@ import {
   Collapsible,
   CollapsibleItem,
 } from 'react-materialize';
-import ImageUploader from './ImageUploader';
 import Loader from './Loader';
 import Options from './Options';
 import infoService from '../services/infoService';
@@ -73,19 +72,19 @@ export default class ProfileForm extends React.Component {
             <form id="addDevice" >
               <Row>
                 <Col s={2}>
-                  <ImageUploader></ImageUploader>
-                  <img className="circle center-align" width="100" height="100" src={userImg} />
+                  <img onClick={this.handleImageSelect} className="circle center-align" width="100" height="100" src={userImg} />
                 </Col>
                 <Input s={5} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
                 <Input s={5} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
+                <input type="image"></input>
               </Row>
               <div className="row">
                 <div className="col s6">
-                  <label for="birthday">Birthday *</label>
+                  <label >Birthday *</label>
                   <input type="date" className="browser-default" label="Birthday" id="birthday" required name="birthday" onChange={this.handleChange} />
                 </div>
                 <div className="col s6">
-                  <label for="height">Height</label>
+                  <label>Height</label>
                   <input type="number" step="0.001" min="0.00" max="3.00" id="height" required name="height" onChange={this.handleChange} />
                 </div>
               </div>

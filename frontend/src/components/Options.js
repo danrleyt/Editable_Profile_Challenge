@@ -9,7 +9,7 @@ const Options = (props) => {
   });
   
   if(!props.required) {
-    let line = <option value={null}></option>
+    let line = <option value={null} key={null}></option>
     options = [line, options]
   }
 
