@@ -11,6 +11,7 @@ import {
 import Loader from './Loader';
 import Options from './Options';
 import infoService from '../services/infoService';
+import ImageUploader from './ImageUploader';
 import userImg from '../res/user.png';
 
 export default class ProfileForm extends React.Component {
@@ -72,11 +73,10 @@ export default class ProfileForm extends React.Component {
             <form id="addDevice" >
               <Row>
                 <Col s={2}>
-                  <img onClick={this.handleImageSelect} className="circle center-align" width="100" height="100" src={userImg} />
+                  <ImageUploader/>
                 </Col>
                 <Input s={5} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
                 <Input s={5} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
-                <input type="image"></input>
               </Row>
               <div className="row">
                 <div className="col s6">
