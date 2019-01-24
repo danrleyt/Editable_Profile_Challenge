@@ -25,6 +25,7 @@ export default class ProfileForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
+    this.handleAutoComplete = this.handleAutoComplete.bind(this);
   }
 
   async getData() {
@@ -65,6 +66,13 @@ export default class ProfileForm extends React.Component {
     console.log(this.state.profile)
   }
 
+  handleAutoComplete(city) {
+    const { profile, cities } = this.state;
+    profile['location'] = cities[city];
+    this.setState({profile});
+    console.log(this.state.profile)
+  }
+
   render() {
     return (
       <div>
@@ -73,7 +81,7 @@ export default class ProfileForm extends React.Component {
             <form id="addDevice" >
               <Row>
                 <Col s={2}>
-                  <ImageUploader/>
+                  <ImageUploader />
                 </Col>
                 <Input s={5} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
                 <Input s={5} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
@@ -107,7 +115,7 @@ export default class ProfileForm extends React.Component {
                     }
                   }
                   name="location"
-                  onChange={this.handleChange}
+                  onAutocomplete={this.handleAutoComplete}
                 />
               </Row>
               <Input s={12} type='textarea' label="About Me" name="aboutMe" onChange={this.handleChange} />
