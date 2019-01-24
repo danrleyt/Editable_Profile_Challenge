@@ -1,10 +1,10 @@
 import axios from 'axios'
-const url = "http://localhost:8080/en"
+const url = "http://localhost:5000"
 
 const service = {
   getCities : async function() {
     try {
-      const response = await axios.get(`${url}/locations/cities.json`);  
+      const response = await axios.get(`${url}/locations`);  
       const originalCities = response.data.cities;
       const mapCities = {};
       for(let city of originalCities) {
@@ -17,7 +17,7 @@ const service = {
     }
   },
   getSingleSelections : function(){
-    return axios.get(`${url}/single_choice_attributes.json`)
+    return axios.get(`${url}/single_choice_attributes`)
   }
 }
 
