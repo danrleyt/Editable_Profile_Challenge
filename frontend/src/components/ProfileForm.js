@@ -8,6 +8,7 @@ import {
   Collapsible,
   CollapsibleItem,
 } from 'react-materialize';
+import ImageUploader from './ImageUploader';
 import Loader from './Loader';
 import Options from './Options';
 import infoService from '../services/infoService';
@@ -72,6 +73,7 @@ export default class ProfileForm extends React.Component {
             <form id="addDevice" >
               <Row>
                 <Col s={2}>
+                  <ImageUploader></ImageUploader>
                   <img className="circle center-align" width="100" height="100" src={userImg} />
                 </Col>
                 <Input s={5} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
