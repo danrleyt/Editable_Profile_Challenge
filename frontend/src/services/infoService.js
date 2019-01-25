@@ -18,6 +18,21 @@ const service = {
   },
   getSingleSelections : function(){
     return axios.get(`${url}/single_choice_attributes`)
+  },
+  uploadImage: function(file){
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+    axios.post(`${url}/api/upload`, formData)
+    .then(
+      (response) => {
+        console.log(response);
+      }
+    )
+    .catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
 

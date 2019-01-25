@@ -11,7 +11,6 @@ import {
 import Loader from './Loader';
 import Options from './Options';
 import infoService from '../services/infoService';
-import ImageUploader from './ImageUploader';
 import userImg from '../res/user.png';
 
 export default class ProfileForm extends React.Component {
@@ -26,6 +25,7 @@ export default class ProfileForm extends React.Component {
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.handleAutoComplete = this.handleAutoComplete.bind(this);
+    this.handleImageSelect = this.handleImageSelect.bind(this);
   }
 
   async getData() {
@@ -69,8 +69,13 @@ export default class ProfileForm extends React.Component {
   handleAutoComplete(city) {
     const { profile, cities } = this.state;
     profile['location'] = cities[city];
-    this.setState({profile});
+    this.setState({ profile });
     console.log(this.state.profile)
+  }
+
+  handleImageSelect(e) {
+    console.log(e.target.files);
+    infoService.uploadImage(e.target.files[0]);
   }
 
   render() {
@@ -78,13 +83,13 @@ export default class ProfileForm extends React.Component {
       <div>
         {
           this.state.dataFetched ?
-            <form id="addDevice" >
+            <form id="addDevice">
               <Row>
-                <Col s={2}>
-                  <ImageUploader />
-                </Col>
-                <Input s={5} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
-                <Input s={5} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
+                <Input s={6} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
+                <Input s={6} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
+              </Row>
+              <Row>
+                  <Input s={12} label="Profile Picture" type="file" accept="image/*" onChange={this.handleImageSelect} />
               </Row>
               <div className="row">
                 <div className="col s6">
