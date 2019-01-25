@@ -5,6 +5,7 @@ import {
 } from 'react-materialize';
 import ProfileForm from './ProfileForm';
 import '../styles/main.css';
+import ViewProfile from './ViewProfile';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Home extends React.Component {
           </Col>
         </Row>
         <ProfileForm></ProfileForm>
+        <ViewProfile></ViewProfile>
       </div>
     );
   }

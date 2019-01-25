@@ -1,10 +1,11 @@
 let mongoose = require('mongoose');
 
 module.exports = function (uri) {
-  mongoose.connect(uri, {
+  const options = { 
     useCreateIndex: true,
     useNewUrlParser: true
-  });
+  };
+  mongoose.connect(uri, options);
   mongoose.connection.on('connected', function() {
     console.log('MongoDB Connected');
   });

@@ -18,7 +18,8 @@ export default class ProfileForm extends React.Component {
     super(props);
     this.state = {
       dataFetched: false,
-      profile: {}
+      profile: {},
+      imageToUpload: {}
     };
     this.getData = this.getData.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +27,7 @@ export default class ProfileForm extends React.Component {
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.handleAutoComplete = this.handleAutoComplete.bind(this);
     this.handleImageSelect = this.handleImageSelect.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
   }
 
   async getData() {
@@ -74,8 +76,32 @@ export default class ProfileForm extends React.Component {
   }
 
   handleImageSelect(e) {
-    console.log(e.target.files);
-    infoService.uploadImage(e.target.files[0]);
+    let { imageToUpload } = this.state;
+    imageToUpload = e.targe.files[0];
+    this.setState({ imageToUpload });
+  }
+
+  async uploadImage(image) {
+    const { profile } = this.state;
+    try {
+      const fileInfo = await infoService.uploadImage(image);
+      profile['profilePicture'] = fileInfo.profilePicture;
+      this.setState({ profile });
+    } catch (error) {
+
+    }
+  }
+
+  async submitProfile() {
+    let { imageToUpload, profile } = this.state;
+    try {
+      if (imageToUpload) {
+        await this.uploadImage(imageToUpload);
+      }
+      infoService.submitProfile(profile);
+    } catch (error) {
+
+    }
   }
 
   render() {
@@ -83,22 +109,22 @@ export default class ProfileForm extends React.Component {
       <div>
         {
           this.state.dataFetched ?
-            <form id="addDevice">
+            <form autoComplete='disabled' id="addDevice">
               <Row>
-                <Input s={6} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
-                <Input s={6} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
+                <Input autoComplete="displayName" s={6} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
+                <Input autoComplete="realName" s={6} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />
               </Row>
               <Row>
-                  <Input s={12} label="Profile Picture" type="file" accept="image/*" onChange={this.handleImageSelect} />
+                <Input s={12} label="Profile Picture" type="file" accept="image/*" onChange={this.handleImageSelect} />
               </Row>
               <div className="row">
                 <div className="col s6">
                   <label >Birthday *</label>
-                  <input type="date" className="browser-default" label="Birthday" id="birthday" required name="birthday" onChange={this.handleChange} />
+                  <input autoComplete="birthday" type="date" className="browser-default" label="Birthday" id="birthday" required name="birthday" onChange={this.handleChange} />
                 </div>
                 <div className="col s6">
                   <label>Height</label>
-                  <input type="number" step="0.001" min="0.00" max="3.00" id="height" required name="height" onChange={this.handleChange} />
+                  <input autoComplete="height" type="number" step="0.001" min="0.00" max="3.00" id="height" required name="height" onChange={this.handleChange} />
                 </div>
               </div>
               <Row>
@@ -109,10 +135,11 @@ export default class ProfileForm extends React.Component {
               </Row>
               <Row>
                 <Options data={this.state.marital_status} fieldLabel="Marital Status *" fieldName="marital_status" required onChange={this.handleChangeSelect} />
-                <Input s={4} type='text' label="Occupation" name="occupation" onChange={this.handleChange} />
+                <Input autoComplete="occupation" s={4} type='text' label="Occupation" name="occupation" onChange={this.handleChange} />
                 <Autocomplete
                   s={5}
                   title="Location *"
+                  autoComplete="location"
                   required
                   data={
                     {
@@ -123,7 +150,7 @@ export default class ProfileForm extends React.Component {
                   onAutocomplete={this.handleAutoComplete}
                 />
               </Row>
-              <Input s={12} type='textarea' label="About Me" name="aboutMe" onChange={this.handleChange} />
+              <Input autoComplete="aboutMe" s={12} type='textarea' label="About Me" name="aboutMe" onChange={this.handleChange} />
               <Button type="submit" className="right">Save Profile</Button>
             </form>
             : <Loader />
