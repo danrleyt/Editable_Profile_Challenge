@@ -28,6 +28,7 @@ export default class ProfileForm extends React.Component {
     this.handleAutoComplete = this.handleAutoComplete.bind(this);
     this.handleImageSelect = this.handleImageSelect.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
+    this.submitProfile = this.submitProfile.bind(this);
   }
 
   async getData() {
@@ -77,7 +78,7 @@ export default class ProfileForm extends React.Component {
 
   handleImageSelect(e) {
     let { imageToUpload } = this.state;
-    imageToUpload = e.targe.files[0];
+    imageToUpload = e.target.files[0];
     this.setState({ imageToUpload });
   }
 
@@ -92,15 +93,17 @@ export default class ProfileForm extends React.Component {
     }
   }
 
-  async submitProfile() {
+  async submitProfile(e) {
+    e.preventDefault();
     let { imageToUpload, profile } = this.state;
     try {
-      if (imageToUpload) {
+      if (Object.keys(imageToUpload).length) {
         await this.uploadImage(imageToUpload);
       }
-      infoService.submitProfile(profile);
+      const res = await infoService.submitProfile(profile);
+      this.props.profile(profile);
     } catch (error) {
-
+      console.log(error);
     }
   }
 
@@ -109,7 +112,7 @@ export default class ProfileForm extends React.Component {
       <div>
         {
           this.state.dataFetched ?
-            <form autoComplete='disabled' id="addDevice">
+            <form autoComplete='disabled' id="addDevice" onSubmit={this.submitProfile}>
               <Row>
                 <Input autoComplete="displayName" s={6} type="text" label="Display Name *" id="deviceName" required name="displayName" onChange={this.handleChange} />
                 <Input autoComplete="realName" s={6} type="text" label="Real Name *" id="deviceName" required name="realName" onChange={this.handleChange} />

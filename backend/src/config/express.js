@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('../api/routes/user');
 const uploadRoutes = require('../api/routes/upload');
 const staticDataRoutes = require('../api/routes/static_data');
+const morgan = require('morgan');
 
 const allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -16,6 +17,7 @@ module.exports = function() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(allowCrossDomain);
+  app.use(morgan('dev'));
   userRoutes(app);
   uploadRoutes(app);
   staticDataRoutes(app);

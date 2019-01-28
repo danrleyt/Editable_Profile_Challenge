@@ -11,7 +11,7 @@ module.exports.createUser = async function (req, res) {
     religion: req.body.religion,
     height: req.body.height,
     figure: req.body.figure,
-    maritalStatus: req.body.maritalStatus,
+    maritalStatus: req.body.marital_status,
     occupation: req.body.occupation,
     aboutMe: req.body.aboutMe,
     location: req.body.location
@@ -35,6 +35,7 @@ module.exports.createUser = async function (req, res) {
       }
     );
   } catch (createUserError) {
+    console.log(createUserError);
     res.status(500).json({
       errorCode: 500,
       message: "An error occurred while creating your profile",
