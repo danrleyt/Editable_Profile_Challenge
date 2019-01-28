@@ -4,6 +4,7 @@
   "description": "code challenge for spark networks",
   "main": "main.js",
   "scripts": {
+    "start": "node main.js",
     "test": "mocha --timeout 10000"
   },
   "repository": {
