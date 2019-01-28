@@ -24,12 +24,13 @@ export default class Home extends React.Component {
     this.setState({ action: view });
   }
 
-  showData = (profile) =>{
-    console.log(profile)
+  showData = (profile, action) => {
+    this.setState({ profile });
+    this.changeView(action);
   }
 
   returnView() {
-    const { action } = this.state;
+    const { action, profile } = this.state;
     if (action === 'home') {
       return (
         <Row>
@@ -44,11 +45,11 @@ export default class Home extends React.Component {
       )
     } else if (action === 'signup') {
       return (
-        <ProfileForm profile={this.showData}></ProfileForm>
+        <ProfileForm callback={this.showData}></ProfileForm>
       )
     } else if (action === 'view') {
       return (
-        <ViewProfile></ViewProfile>
+        <ViewProfile callback={this.showData} profile={profile}></ViewProfile>
       )
     }
   }

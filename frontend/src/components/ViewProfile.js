@@ -11,6 +11,11 @@ export default class viewProfile extends React.Component {
     this.state = {
       profile: {}
     }
+    this.changeAction = this.changeAction.bind(this);
+  }
+
+  changeAction() {
+    this.props.callback(this.state.profile, 'signup')
   }
 
   render() {
@@ -24,7 +29,7 @@ export default class viewProfile extends React.Component {
             <h1>Display Name</h1>
           </Col>
           <Col s={3}>
-            <Button className="right">Edit</Button>
+            <Button className="right" onClick={this.changeAction}>Edit</Button>
           </Col>
         </Row>
         <Row>
