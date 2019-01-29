@@ -20,12 +20,17 @@ describe('Signup Page', () => {
     page.emulate({
       viewport: {
         width: 500,
-        heigh: 2400
+        height: 2400
       },
       userAgent: ''
     });
 
     await page.goto('http://localhost:3000');
+    await page.waitForSelector('#signup');
 
-  })
-})
+    const html = await page.$eval('#signup', e => e.innerHTML);
+    expect(html).toBe('Signup');
+    browser.close();
+
+  }, 16000);
+});

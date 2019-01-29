@@ -39,7 +39,7 @@ export default class Home extends React.Component {
           </Col>
           <Col s={12} className="center">
             <h4>Sign up and meet new people</h4>
-            <Button onClick={() => this.changeView('signup')}>Signup</Button>
+            <Button id="signup" onClick={() => this.changeView('signup')}>Signup</Button>
           </Col>
         </Row>
       )
