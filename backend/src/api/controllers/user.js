@@ -57,6 +57,33 @@ module.exports.getAllUsers = async function (req, res) {
   }
 }
 
+module.exports.getUserById = async function() {
+  try{
+    if(req.params.edit) {
+      const select = 'realName marital_status occupation'
+      const user = await User.findById(req.params.id).select(select);
+      res.status(200).json(user);
+    }
+  } catch (getUserError) {
+    res.status(500).json({
+      errorCode: 500,
+      message: "An error occurred while getting user's profiles",
+      error: getUserError
+    })
+  }
+}
+
 module.exports.editUserProfile = async function(req, res) {
-  
+  try {
+    const id = req.params.id;
+    const newUser = req.body;
+    const updatedUser = await User.findOneAndUpdate({_id: id}, newUser);
+    res.status(200).send(updatedUser);
+  } catch(editUserError) {
+    res.status(500).json({
+      errorCode: 500,
+      message: "An error occurred while updating user's profiles",
+      error: editUserError
+    })
+  }
 }

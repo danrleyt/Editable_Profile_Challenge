@@ -32,7 +32,7 @@ module.exports = function () {
     },
     figure: {
     },
-    maritalStatus: { 
+    marital_status: { 
       type: Map,
       required: true,
       select: false
