@@ -29,6 +29,9 @@ const service = {
   },
   getProfileView: function (profileID, edit) {
     return axios.get(`${url}/api/users/${profileID}`, { params: { edit } });
+  },
+  getProfiles: function() {
+    return axios.get(`${url}/api/users`);
   }
 }
 

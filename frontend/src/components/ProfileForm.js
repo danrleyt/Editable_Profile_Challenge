@@ -98,9 +98,9 @@ export default class ProfileForm extends React.Component {
     let { imageToUpload, profile } = this.state;
     try {
       if (Object.keys(imageToUpload).length) {
-        //await this.uploadImage(imageToUpload);
+        await this.uploadImage(imageToUpload);
       }
-      //const res = await infoService.submitProfile(profile);
+      const res = await infoService.submitProfile(profile);
       this.props.callback(profile, 'view');
     } catch (error) {
       console.log(error);

@@ -5,6 +5,7 @@ import {
   Button
 } from 'react-materialize';
 import ProfileForm from './ProfileForm';
+import infoService from '../services/infoService';
 import '../styles/main.css';
 import ViewProfile from './ViewProfile';
 
@@ -18,6 +19,23 @@ export default class Home extends React.Component {
     this.changeView = this.changeView.bind(this);
     this.returnView = this.returnView.bind(this);
     this.showData = this.showData.bind(this);
+    this.getUsers = this.getUsers.bind(this);
+  }
+
+  componentDidMount() {
+    this.getUsers();
+  }
+
+  async getUsers() {
+    try {
+      const payload = await infoService.getProfiles();
+      if (payload.data.length > 0) {
+        const profile = payload.data[0];
+        this.showData(profile, 'view');
+      } 
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   changeView(view) {
@@ -26,6 +44,7 @@ export default class Home extends React.Component {
 
   showData = (profile, action) => {
     this.setState({ profile });
+    console.log(profile);
     this.changeView(action);
   }
 

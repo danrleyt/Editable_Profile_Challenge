@@ -11,7 +11,7 @@ module.exports.createUser = async function (req, res) {
     religion: req.body.religion,
     height: req.body.height,
     figure: req.body.figure,
-    maritalStatus: req.body.marital_status,
+    marital_status: req.body.marital_status,
     occupation: req.body.occupation,
     aboutMe: req.body.aboutMe,
     location: req.body.location
@@ -57,13 +57,11 @@ module.exports.getAllUsers = async function (req, res) {
   }
 }
 
-module.exports.getUserById = async function() {
-  try{
-    if(req.params.edit) {
-      const select = 'realName marital_status occupation'
-      const user = await User.findById(req.params.id).select(select);
-      res.status(200).json(user);
-    }
+module.exports.getUserById = async function (req, res) {
+  try {
+    const select = 'realName marital_status occupation'
+    const user = await User.findById(req.params.id).select(req.params.edit ? select : '');
+    res.status(200).json(user);
   } catch (getUserError) {
     res.status(500).json({
       errorCode: 500,
@@ -73,13 +71,13 @@ module.exports.getUserById = async function() {
   }
 }
 
-module.exports.editUserProfile = async function(req, res) {
+module.exports.editUserProfile = async function (req, res) {
   try {
     const id = req.params.id;
     const newUser = req.body;
-    const updatedUser = await User.findOneAndUpdate({_id: id}, newUser);
+    const updatedUser = await User.findOneAndUpdate({ _id: id }, newUser);
     res.status(200).send(updatedUser);
-  } catch(editUserError) {
+  } catch (editUserError) {
     res.status(500).json({
       errorCode: 500,
       message: "An error occurred while updating user's profiles",
