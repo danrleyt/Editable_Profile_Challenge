@@ -53,7 +53,7 @@ module.exports.getAllUsers = async function (req, res) {
       errorCode: 500,
       message: "An error occurred while getting user's profiles",
       error: createUserError
-    })
+    });
   }
 }
 
@@ -67,14 +67,27 @@ module.exports.getUserById = async function (req, res) {
       errorCode: 500,
       message: "An error occurred while getting user's profiles",
       error: getUserError
-    })
+    });
   }
 }
 
 module.exports.editUserProfile = async function (req, res) {
   try {
     const id = req.params.id;
-    const newUser = req.body;
+    const newUser = {
+      displayName: req.body.displayName,
+      realName: req.body.realName,
+      profilePicture: req.body.profilePicture,
+      birthday: req.body.birthday,
+      gender: req.body.gender,
+      ethnicity: req.body.ethnicity,
+      religion: req.body.religion,
+      figure: req.body.figure,
+      marital_status: req.body.marital_status,
+      occupation: req.body.occupation,
+      aboutMe: req.body.aboutMe,
+      location: req.body.location
+    };
     const updatedUser = await User.findOneAndUpdate({ _id: id }, newUser);
     res.status(200).send(updatedUser);
   } catch (editUserError) {
@@ -82,6 +95,6 @@ module.exports.editUserProfile = async function (req, res) {
       errorCode: 500,
       message: "An error occurred while updating user's profiles",
       error: editUserError
-    })
+    });
   }
 }
